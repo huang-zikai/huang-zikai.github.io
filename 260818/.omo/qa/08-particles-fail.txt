@@ -1,0 +1,6 @@
+"--- T8 failure test evidence ---"  
+"mutation: pvy[i]=0 (fall speed zeroed)"  
+"petalY0 read1: -0.38415560126304626"  
+"petalY0 read2 (1s later): -0.38415560126304626"  
+"values EQUAL -> no fall motion (expected FAIL confirmed) [PASS-AS-EXPECTED]"  
+"restored pvy to 0.3+rng()*0.3, rebuild OK" 

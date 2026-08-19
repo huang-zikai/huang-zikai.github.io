@@ -1,0 +1,63 @@
+{
+  "schema_version": 2,
+  "active_work_id": "qixi-roses-f08614e8",
+  "works": {
+    "qixi-roses-f08614e8": {
+      "work_id": "qixi-roses-f08614e8",
+      "active_plan": "D:\\MyLearning\\MyWork\\260818\\.omo\\plans\\qixi-roses.md",
+      "plan_name": "qixi-roses",
+      "status": "active",
+      "started_at": "2026-08-18T10:32:26.734Z",
+      "updated_at": "2026-08-19T03:23:58.406Z",
+      "session_ids": [
+        "opencode:ses_fec633cdaffeXA5gM8iwZEs8j2"
+      ],
+      "session_origins": {
+        "opencode:ses_fec633cdaffeXA5gM8iwZEs8j2": "direct"
+      },
+      "agent": "atlas",
+      "task_sessions": {
+        "todo:1": {
+          "task_key": "todo:1",
+          "task_label": "1",
+          "task_title": "**Falling petals**: per-rose 60-120 small planes (halve on low-tier devices — see Execution strategy device tiers: low = innerWidth<768 || hardwareConcurrency<=4). Use canvas-generated 32x32 pink petal texture (two-color gradient). PlaneGeometry random size 0.04-0.09, random initial x/z/height, each frame falls vy 0.3-0.6 + sine horizontal drift + self-rotation, reset to top when y<-2. Prefer ONE InstancedMesh to control draw calls (or a pooled Mesh set if InstancedMesh proves complex — but InstancedMesh preferred).",
+          "session_id": "opencode:ses_fe80ee3cdffeZn64tMN0tYmW9e",
+          "agent": "Sisyphus-Junior",
+          "category": "visual-engineering",
+          "started_at": "2026-08-18T10:54:03.545Z",
+          "ended_at": "2026-08-19T03:23:58.406Z",
+          "elapsed_ms": 59394861,
+          "status": "completed",
+          "updated_at": "2026-08-19T03:23:58.406Z"
+        }
+      }
+    }
+  },
+  "active_plan": "D:\\MyLearning\\MyWork\\260818\\.omo\\plans\\qixi-roses.md",
+  "started_at": "2026-08-18T10:32:26.734Z",
+  "status": "active",
+  "updated_at": "2026-08-19T03:23:58.406Z",
+  "session_ids": [
+    "opencode:ses_fec633cdaffeXA5gM8iwZEs8j2"
+  ],
+  "session_origins": {
+    "opencode:ses_fec633cdaffeXA5gM8iwZEs8j2": "direct"
+  },
+  "plan_name": "qixi-roses",
+  "task_sessions": {
+    "todo:1": {
+      "task_key": "todo:1",
+      "task_label": "1",
+      "task_title": "**Falling petals**: per-rose 60-120 small planes (halve on low-tier devices — see Execution strategy device tiers: low = innerWidth<768 || hardwareConcurrency<=4). Use canvas-generated 32x32 pink petal texture (two-color gradient). PlaneGeometry random size 0.04-0.09, random initial x/z/height, each frame falls vy 0.3-0.6 + sine horizontal drift + self-rotation, reset to top when y<-2. Prefer ONE InstancedMesh to control draw calls (or a pooled Mesh set if InstancedMesh proves complex — but InstancedMesh preferred).",
+      "session_id": "opencode:ses_fe80ee3cdffeZn64tMN0tYmW9e",
+      "agent": "Sisyphus-Junior",
+      "category": "visual-engineering",
+      "started_at": "2026-08-18T10:54:03.545Z",
+      "ended_at": "2026-08-19T03:23:58.406Z",
+      "elapsed_ms": 59394861,
+      "status": "completed",
+      "updated_at": "2026-08-19T03:23:58.406Z"
+    }
+  },
+  "agent": "atlas"
+}

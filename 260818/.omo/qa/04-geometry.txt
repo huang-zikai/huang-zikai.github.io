@@ -1,0 +1,25 @@
+qixi-roses todo 4 - single rose geometry QA (agent-browser, file://)
+
+HAPPY (build 551444 bytes, seed=20260819):
+- __roseTest()  = {"children":51,"hasGeometry":true}          -> children 51 > 20 PASS, all have geometry PASS
+- __roseInfo()  = {"children":51,"meshes":63,"hash":1558115294}
+- __roseInfo() 2nd call = same hash 1558115294               -> deterministic (same seed twice) PASS
+- __roseInfo() after rebuild = same hash 1558115294          -> deterministic across builds PASS
+- __roseBox()   = min[-0.714,-0.753,-0.424] max[0.726,0.19,0.428] size[1.44,0.943,0.852]
+                -> non-degenerate; head above origin (petals y up to 0.19), stem below (y down to -0.753) PASS
+- 04-rose.png pixel analysis (dark sky bg #0b1026..#1a1030): 4430 light pixels / 0.624%
+                -> gray-white rose silhouette visible PASS
+- agent-browser errors after reload: empty (zero page errors) PASS
+
+STRUCTURE (from source): 27 petals (inner 5x3 @ r=0.12/0.18/0.26, 72deg/36deg spiral; outer 6x2 @ r=0.34/0.42,
+60deg/30deg) + 12 stamens (cylinder+sphere ball, temp #f5c542) + 5 sepals + 1 stem (CatmullRomCurve3, 4 pts,
+2 bends, r=0.02) + 4-6 folded leaves + 2-4 thorns. All randomness from mulberry32(seed).
+
+FAILURE (mulberry32 broken -> constant 0.5, build 551337 bytes):
+- __roseInfo()  = {"children":53,"meshes":65,"hash":607042091}
+- hash 607042091 != happy hash 1558115294                   -> EXPECTED FAIL confirmed (rose looks wrong:
+  all petals identical size/curl, perfectly symmetric; leaf/thorn counts shifted 51->53)
+- 04-rose-fail.png pixel analysis: 4444 light pixels / 0.626% (altered rose still renders)
+- RESTORED mulberry32 -> rebuild -> hash back to 1558115294, children 51 -> PASSES AGAIN
+
+RESULT: ALL PASS (failure scenario verified as expected-fail, then restored)

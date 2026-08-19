@@ -1,0 +1,26 @@
+qixi-roses todo 5 - bouquet assembly QA (agent-browser, file://)
+
+HAPPY (final build 552808 bytes, BOUQUET_ROSE_COUNT=7):
+- __bouquetInfo() = {"roseCount":7,"totalMeshes":459,"nanFree":true}
+  -> roseCount===7 PASS, totalMeshes 459 >= 50 PASS, nanFree===true PASS
+- __roseInfo()    = {"children":51,"meshes":63,"hash":1558115294}
+  -> identical to todo-4 baseline hash (todo 4 geometry NOT broken) PASS
+- agent-browser errors: empty (zero page errors) PASS
+- Pixel analysis (analyze-png.cjs, sky bg #0b1026..#1a1030 is dark):
+  * 05-bouquet-front.png  thr350: 245355 light px (34.6%)  vs 04-rose.png baseline 123681 (17.4%)  -> +98% PASS
+  * 05-bouquet-front.png  thr520: 34365  light px (4.84%)  vs 04-rose.png baseline 10274  (1.45%)  -> 3.3x PASS
+  * 05-bouquet-final.png  thr350: 216889 light px (30.6%)  vs baseline 123681 -> +75% PASS
+  * 05-bouquet-final.png  thr520: 58795  light px (8.29%)  vs baseline 10274  -> 5.7x PASS
+  -> 7-rose bouquet clearly brighter/wider than single-rose baseline PASS
+- 3-angle screenshots (temp __camShot hook, removed after QA):
+  * 05-bouquet-front.png (0,1.2,6.5)  thr350: 245355 px
+  * 05-bouquet-side.png  (6.5,1.2,0.01) thr350: 246283 px  -> bouquet visible from side PASS
+  * 05-bouquet-top.png   (0.01,8,0.01)  thr350: 271176 px  -> all 7 blooms visible from top PASS
+  (top > front/side consistent with 7 blooms seen from above; no black screen)
+
+STRUCTURE (from source): 7 roses (seeds 20260819 + i*7919, i=0..6) - center rose root at
+(0,0.05,0) head y=0.85; 6 ring roses root radius 0.08-0.14 around (0,0.05,0), head 0.2-0.4
+lower, outward tilt 5-15deg, random Y yaw; 3 brown (#8d6e63) tie cylinders crisscrossed at
+y 0.028-0.072; 3 wrapper leaves (temp green) below tie; group at (0,0.9,0).
+
+RESULT: ALL PASS

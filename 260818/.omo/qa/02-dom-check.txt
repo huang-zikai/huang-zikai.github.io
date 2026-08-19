@@ -1,0 +1,22 @@
+qixi-roses todo 2 - DOM structure & theme QA (happy path)
+=============================================================
+Time: 2026-08-18
+Tool: agent-browser cli (desktop 1280x800, mobile 375x667, file:// URL)
+
+DESKTOP (1280x800):
+  document.querySelectorAll('#name,#poem,#date,#hint,#hearts,#intro').length = 6   [PASS]
+  #overlay computed display != none (visible)                                      [PASS]
+  #name textContent = 许如意                                                       [PASS]
+  body background-image contains linear-gradient (deep-blue night sky)             [PASS]
+  no horizontal scroll (scrollWidth <= innerWidth)                                 [PASS]
+  #poem textContent = 星河为笺，玫瑰为证 世间美好，皆如你意                        [PASS]
+  page errors: none                                                                [PASS]
+
+MOBILE (375x667):
+  document.querySelectorAll('#name,#poem,#date,#hint,#hearts,#intro').length = 6   [PASS]
+  #overlay visible                                                                 [PASS]
+  #name textContent = 许如意                                                       [PASS]
+  no horizontal scroll                                                             [PASS]
+
+Screenshots: .omo/qa/02-dom.png (desktop), .omo/qa/02-dom-mobile.png (mobile)
+RESULT: ALL PASS

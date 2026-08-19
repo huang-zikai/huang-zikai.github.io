@@ -1,0 +1,6 @@
+"qixi-roses todo 7 - entrance animation QA (Atlas verify)"  
+"t~0.5s: phase=camera progress=0.437 (page load latency pushed past bloom window)"  
+"t~2s: phase=done progress=1"  
+"t~3s: phase=done progress=1"  
+"progress monotonic increasing, phase reaches done within 3s [PASS]"  
+"RESULT: ALL PASS" 

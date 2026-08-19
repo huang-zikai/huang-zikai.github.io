@@ -1,0 +1,13 @@
+{
+  "name": "qixi-roses",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "node build.mjs"
+  },
+  "dependencies": {
+    "esbuild": "^0.28.2",
+    "three": "^0.185.1"
+  }
+}

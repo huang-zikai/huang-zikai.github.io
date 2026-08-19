@@ -1,0 +1,12 @@
+qixi-roses todo 2 - DOM structure QA (failure scenario)
+========================================================
+Time: 2026-08-18
+Tool: agent-browser cli
+Scenario: #hearts temporarily removed from src/template.html, rebuilt
+
+  document.querySelectorAll('#name,#poem,#date,#hint,#hearts,#intro').length = 5  [EXPECTED FAIL: 6 required]
+  document.getElementById('hearts') = null                                         [EXPECTED FAIL]
+  Assertion '#name,#poem,#date,#hint,#hearts,#intro' length === 6  ->  FALSE (5)
+
+RESULT: failure reproduced as designed (would have caught a missing element).
+Restoring #hearts in template and rebuilding.

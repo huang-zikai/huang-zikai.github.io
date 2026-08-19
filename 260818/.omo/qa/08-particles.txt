@@ -1,0 +1,6 @@
+"qixi-roses todo 8 - particle system QA (Atlas verify)"  
+"npm run build -> exit 0, index.html 571744 bytes"  
+"__particleStats() -> {petals:469, stars:1551} both >0 [PASS]"  
+"petalY0 samples (3 reads ~0.5-1s apart): -0.506, 0.386, -0.089 -> all differ, falling motion [PASS]"  
+"__fps() -> 56.7 then 59.9 (desktop>=45) [PASS]"  
+"RESULT: HAPPY ALL PASS"  

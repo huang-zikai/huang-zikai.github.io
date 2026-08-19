@@ -1,0 +1,19 @@
+qixi-roses todo 6 - materials & glow QA (Atlas verify, 2026-08-19)
+=================================================================
+Tool: agent-browser cli (file:// URL) + node pngred.js pixel analysis
+
+HAPPY PATH:
+  npm run build -> exit 0, index.html 744408 bytes
+  __bouquetInfo() -> { roseCount: 7, totalMeshes: 459, nanFree: true }   [PASS]
+  petal material restored: vertexColors: true (DIAGNOSTIC residue removed) [PASS]
+  pixel analysis .omo/qa/06-materials.png (1264x569):
+    red-dominant pixels (R>G+10 && R>B+10): 16800 (2.34%)
+    greenish pixels: 563
+    red >> green -> red/pink bloom confirmed vs gray baseline        [PASS]
+  glow sprites: createGlowSprites() 3 sprites, AdditiveBlending,
+    depthWrite false, opacity 0.475, breathing in animate loop       [PASS by code review]
+
+NOTE: __materialInfo hook was NOT added by the aborted subagent;
+      material state verified via code review + pixel analysis instead.
+
+RESULT: ALL PASS

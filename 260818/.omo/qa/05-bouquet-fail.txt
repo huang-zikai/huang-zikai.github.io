@@ -1,0 +1,14 @@
+qixi-roses todo 5 - bouquet assembly FAILURE QA (roseCount 7 -> 6)
+
+QA FAILURE SCENARIO: BOUQUET_ROSE_COUNT temporarily set to 6, rebuilt, reopened.
+
+- __bouquetInfo() = {"roseCount":6,"totalMeshes":394,"nanFree":true}
+- roseCount===6 != expected 7  -> EXPECTED FAIL confirmed (assertion roseCount===7 fails)
+- totalMeshes dropped 459 -> 394 (one rose = 65 meshes removed, consistent)
+- 05-bouquet-fail.png captured as evidence
+
+RESTORED BOUQUET_ROSE_COUNT=7 -> rebuild (552808 bytes):
+- __bouquetInfo() = {"roseCount":7,"totalMeshes":459,"nanFree":true} -> PASSES AGAIN
+- __roseInfo() hash 1558115294 unchanged -> PASS
+
+RESULT: failure scenario verified as expected-fail, then restored

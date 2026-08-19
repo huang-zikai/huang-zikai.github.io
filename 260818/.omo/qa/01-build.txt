@@ -1,0 +1,9 @@
+=== 01-build QA ===  
+--- check1: bundled JS present ---  
+PASS: qixi-roses init found  
+--- check2: no INLINE placeholder ---  
+PASS: no INLINE placeholder  
+--- check3: no external refs ---  
+PASS: no external refs  
+--- check4: css inline ---  
+PASS: css comment inlined  
