@@ -1,0 +1,24 @@
+qixi-roses 范围保真核对（F4）— 2026-08-20
+============================================
+对照 Scope 检查：
+
+[PASS] 交付物 = 单个 index.html（自包含，无外部 JS/CSS 引用）
+[PASS] 无部署步骤（部署由用户自行推 GitHub Pages，计划 Commit strategy 明确）
+[PASS] 无 git 提交（用户 AGENTS.md 规则 1：无明确指令不提交）
+[PASS] 无音乐/webfont/额外依赖（仅 three 作为构建依赖，产物内联）
+[PASS] 无 README 等额外文档
+[PASS] 文案与定稿逐字一致：
+       title: 七夕 · 致许如意
+       #name: 许如意
+       #poem: 星河为笺，玫瑰为证 / 世间美好，皆如你意
+       #date: 丙午年七月初七 · 2026.8.19
+       #hint: 点击任意处，有惊喜
+[PASS] 无超出范围的附加功能（未添加音乐/分享/多页等）
+
+范围核对清单：
+- 交付物：index.html（575840 bytes，<1.5MB）
+- 源码：package.json、package-lock.json、build.mjs、src/main.js、src/template.html、src/style.css
+- 证据：.omo/qa/（01-14 + final-*）
+- 无部署、无提交、无额外依赖
+
+VERDICT: APPROVE

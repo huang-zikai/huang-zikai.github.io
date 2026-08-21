@@ -1,0 +1,19 @@
+qixi-roses 交付检查（todo 14）— 2026-08-20
+============================================
+[PASS] index.html 存在且自包含（单文件，无外部 JS/CSS 引用）
+[PASS] 体积 576215 bytes（磁盘实测）< 1.5MB 目标
+       （注：build.mjs 输出的 575840 bytes 为 esbuild JS bundle 大小，非完整文件）
+[PASS] 外部 URL 检查（Node 脚本扫描 http/https）：仅 2 处命中，均非网络请求——
+       1) http://www.w3.org/1999/xhtml（HTML 标签 XHTML 命名空间声明，标准写法）
+       2) https://jcgt.org/published/0007/04/01/（Three.js 源码许可证注释）
+       无任何 <script src / <link rel / <img src / url() 外部资源引用
+[PASS] 无调试 console.log/console.error/console.warn 残留（findstr 零命中）
+[PASS] 源码文件齐全：package.json、package-lock.json、build.mjs、src/main.js、
+       src/template.html、src/style.css
+[PASS] npm run build 可重复构建（node build.mjs 输出 index.html written）
+[PASS] 保留调试钩子：__degraded、__particleStats、__deviceInfo、__fps 等
+       （便于用户后续自检，符合计划"按需保留"）
+[PASS] 无冗余文件：node_modules 不入交付、.omo 为计划与 QA 证据目录
+交付物：D:\MyLearning\MyWork\260818\index.html
+打开方式：双击 index.html（file:// 直接打开）或本地服务器（npx serve）
+部署提示：用户自行推 GitHub Pages

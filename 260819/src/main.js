@@ -1,7 +1,5 @@
 import * as THREE from 'three';
 
-console.log('qixi-roses init');
-
 // --- WebGL 检测（todo 11 将补全 2D 降级渲染） ---
 let gl = null;
 try {
@@ -81,7 +79,20 @@ window.addEventListener('touchmove', (e) => {
   const t = e.touches[0];
   if (t) setPointer(t.clientX, t.clientY);
 }, { passive: true });
-window.addEventListener('resize', sizeHeartsCanvas);
+
+// resize 节流（todo 12）：150ms 内合并多次触发，避免 resize/orientationchange 风暴
+function throttle(fn, ms) {
+  let timer = 0;
+  return (...args) => {
+    if (timer) return;
+    timer = setTimeout(() => {
+      timer = 0;
+      fn(...args);
+    }, ms);
+  };
+}
+const throttledHeartsResize = throttle(sizeHeartsCanvas, 150);
+window.addEventListener('resize', throttledHeartsResize);
 sizeHeartsCanvas();
 
 // 入场动画常量与元素缓存（todo 7）：
@@ -126,14 +137,95 @@ window.__sceneInfo = () => ({
   cameraZ: camera ? +camera.position.z.toFixed(3) : null,
 });
 
+// 设备信息钩子（todo 12）：dpr 实际值、DPR 上限（low 1.5 / high 2）、设备档位
+window.__deviceInfo = () => ({
+  dpr: +(window.devicePixelRatio || 1).toFixed(2),
+  cap: deviceTier === 'low' ? 1.5 : 2,
+  tier: deviceTier,
+});
+
 if (!gl) {
-  // WebGL 不可用：切到 2D 降级容器（渲染逻辑由 todo 11 完成）
+  // WebGL 不可用：切到 2D 降级容器并运行 CSS 玫瑰降级渲染（todo 11）
   const sceneEl = document.getElementById('scene');
   const fallbackEl = document.getElementById('fallback2d');
   if (sceneEl) sceneEl.style.display = 'none';
   if (fallbackEl) fallbackEl.style.display = 'block';
+  initFallback2D();
 } else {
   initScene();
+}
+
+// ==================== 2D 降级渲染（todo 11） ====================
+// WebGL 不可用时：CSS 玫瑰（3-5 朵，每朵 8-10 片花瓣 + 茎 + 叶）、
+// CSS 飘落花瓣粒子（10-20 个 span）、星光（radial-gradient 背景已在 style.css）、
+// #hearts 爱心照常工作（事件监听在模块顶部已注册）、入场与文字动画照常。
+function initFallback2D() {
+  const fallbackEl = document.getElementById('fallback2d');
+  if (!fallbackEl) return;
+
+  // 3-5 朵 CSS 玫瑰：错落排布在视口下半部
+  const roseCount = 3 + Math.floor(Math.random() * 3); // 3-5
+  const positions = [
+    { left: '18%', bottom: '12%', scale: 1.0, rot: -8 },
+    { left: '50%', bottom: '6%', scale: 1.25, rot: 0 },
+    { left: '80%', bottom: '14%', scale: 0.95, rot: 10 },
+    { left: '34%', bottom: '2%', scale: 0.8, rot: 5 },
+    { left: '66%', bottom: '3%', scale: 0.85, rot: -5 },
+  ];
+  for (let i = 0; i < roseCount; i++) {
+    const rose = document.createElement('div');
+    rose.className = 'css-rose';
+    const p = positions[i];
+    rose.style.left = p.left;
+    rose.style.bottom = p.bottom;
+    rose.style.transform = `scale(${p.scale}) rotate(${p.rot}deg)`;
+
+    // 8-10 片花瓣：绕中心旋转层叠成花
+    const petalCount = 8 + Math.floor(Math.random() * 3); // 8-10
+    for (let j = 0; j < petalCount; j++) {
+      const petal = document.createElement('div');
+      petal.className = 'css-petal';
+      petal.style.transform = `rotate(${(360 / petalCount) * j}deg)`;
+      rose.appendChild(petal);
+    }
+    // 茎 + 左右两片叶
+    const stem = document.createElement('div');
+    stem.className = 'css-stem';
+    rose.appendChild(stem);
+    const leafL = document.createElement('div');
+    leafL.className = 'css-leaf';
+    rose.appendChild(leafL);
+    const leafR = document.createElement('div');
+    leafR.className = 'css-leaf right';
+    rose.appendChild(leafR);
+
+    fallbackEl.appendChild(rose);
+  }
+
+  // 10-20 个 CSS 飘落花瓣粒子：随机水平位置/尺寸/时长/延迟
+  const petalCount = reducedMotion ? 10 : 10 + Math.floor(Math.random() * 11); // 10-20
+  for (let i = 0; i < petalCount; i++) {
+    const petal = document.createElement('span');
+    petal.className = 'falling-petal';
+    petal.style.left = `${Math.random() * 100}%`;
+    const size = 10 + Math.random() * 8;
+    petal.style.width = `${size}px`;
+    petal.style.height = `${size * 0.78}px`;
+    petal.style.animationDuration = `${6 + Math.random() * 8}s`;
+    petal.style.animationDelay = `${-Math.random() * 12}s`;
+    fallbackEl.appendChild(petal);
+  }
+
+  // 入场与文字动画照常（与 3D 路径共用 initEntrance/updateEntrance 时间轴）
+  initEntrance();
+  let fallbackStart = performance.now();
+  function fallbackLoop(now) {
+    requestAnimationFrame(fallbackLoop);
+    updateEntrance(now);
+    updateHearts((now - fallbackStart) / 1000);
+    fallbackStart = now;
+  }
+  requestAnimationFrame(fallbackLoop);
 }
 
 function initScene() {
@@ -177,7 +269,7 @@ function initScene() {
   // 粒子系统（todo 8）：飘落花瓣（InstancedMesh）+ 星光（Points）
   particleSystem = createParticleSystem(scene);
 
-  // 视口变化（resize / 旋转屏幕）时同步画布与相机
+  // 视口变化（resize / 旋转屏幕）时同步画布与相机（todo 12：150ms 节流）
   function onResize() {
     const w = window.innerWidth;
     const h = window.innerHeight;
@@ -185,8 +277,9 @@ function initScene() {
     camera.aspect = w / h;
     camera.updateProjectionMatrix();
   }
-  window.addEventListener('resize', onResize);
-  window.addEventListener('orientationchange', onResize);
+  const throttledSceneResize = throttle(onResize, 150);
+  window.addEventListener('resize', throttledSceneResize);
+  window.addEventListener('orientationchange', throttledSceneResize);
 
   // 渲染循环：光晕 opacity 随正弦呼吸（0.35-0.6，周期 ~2.5s，todo 9 联调）；
   // 每帧驱动粒子系统（下落/横漂/自转/重置、星光闪烁）、爱心粒子与帧率采样

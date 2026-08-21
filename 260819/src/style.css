@@ -12,6 +12,7 @@ body {
   width: 100%;
   height: 100%;
   overflow: hidden; /* 无滚动条 */
+  touch-action: manipulation; /* todo 12：移动端双击缩放/长按菜单由浏览器接管，避免误触 */
 }
 
 body {

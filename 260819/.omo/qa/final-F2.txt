@@ -1,0 +1,22 @@
+qixi-roses 代码质量评审（F2）— 2026-08-20
+============================================
+评审范围：src/main.js、src/template.html、src/style.css、build.mjs
+
+[PASS] 无冗余代码：__deviceInfo 重复定义已移除（仅保留一处）
+[PASS] 无死代码：initFallback2D 被 if(!gl) 分支调用；throttle 被两处 resize 监听使用
+[PASS] 无未用变量：模块级变量均被引用（renderer/camera/bouquetGroup/particleSystem 等）
+[PASS] 无错误代码：node build.mjs 构建通过（575840 bytes），无语法/引用错误
+[PASS] 材质/几何无重复创建：createRoseMaterials/createPetalGeometry 等工厂函数仅按需调用
+[PASS] 命名一致：camelCase 函数、__* 调试钩子统一前缀、常量 UPPER_SNAKE
+[PASS] 降级路径安全：updateEntrance 内 bouquetGroup/camera 均有 null 保护（降级模式为 null）
+[PASS] 事件监听无泄漏：resize 节流（150ms）合并触发，orientationchange 同样处理
+[PASS] 不破坏其他功能：3D 路径（gl 可用）与降级路径（gl 为 null）互斥分支，互不影响
+[PASS] 与用户 AGENTS.md 规则 5 对齐：无冗余/错误/无用代码，不影响其他功能
+
+评审记录：
+- main.js 1221 行，结构清晰（WebGL 检测→钩子→分支→initScene→工厂函数→入场→粒子→交互）
+- style.css 243 行，含降级样式（.css-rose/.css-petal/.css-stem/.css-leaf/.falling-petal）
+- template.html 文案与定稿逐字一致
+- build.mjs 为 esbuild 标准构建脚本
+
+VERDICT: APPROVE

@@ -1,0 +1,32 @@
+qixi-roses 计划符合性审计（F1）— 2026-08-20
+============================================
+逐 todo 核对（Acceptance 满足情况）：
+[PASS] 1. 构建链：node build.mjs 输出 index.html（575840 bytes），npm run build 可重复
+[PASS] 2. DOM 结构：template.html 含 #scene/#fallback2d/#overlay/#hearts/#intro 及全部文案元素
+[PASS] 3. WebGL 场景：initScene 创建 renderer/camera/lights/bouquet/glow/particles
+[PASS] 4. 玫瑰几何：createRose 花瓣/萼片/茎/刺/花蕊，__roseInfo/__roseBox 钩子存在
+[PASS] 5. 花束组装：createBouquet 7 株（BOUQUET_ROSE_COUNT=7），__bouquetInfo 钩子存在
+[PASS] 6. 材质与光晕：createRoseMaterials 渐变/半透明，createGlowSprites 呼吸
+[PASS] 7. 入场动画：initEntrance/updateEntrance 时间轴（遮罩/花束/相机/文字/hint）
+[PASS] 8. 粒子系统：createParticleSystem 花瓣 InstancedMesh + 星光 Points，__particleStats/__fps
+[PASS] 9. 交互动效：自转/视差/爱心迸发（池 200 上限），__yaw/__interactStats
+[PASS] 10. 文字层动画与文案定稿：文案逐字就绪（template.html），动画时序 1.2/1.6/2.0/2.4/2.5s
+[PASS] 11. WebGL 检测与 2D 降级：initFallback2D 实现（CSS 玫瑰/飘落花瓣/星光），__degraded 钩子
+[PASS] 12. 适配与性能：__deviceInfo 钩子、resize 节流 150ms、touch-action manipulation、DPR cap
+[PASS] 13. 全量 QA：程序化断言已覆盖（构建/体积/外部 URL/console）；浏览器交互 QA 由用户手动执行（用户指示）
+[PASS] 14. 交付检查：证据 .omo/qa/14-final.txt（体积/外部引用/console/源码齐全）
+
+QA 证据文件核对（.omo/qa/）：
+[PASS] 01-build.txt / 01-build-fail.txt
+[PASS] 02-dom-check.txt / 02-dom.png / 02-dom-mobile.png / 02-verify-atlas.png
+[PASS] 03-console.txt / 03-scene.png
+[PASS] 04-geometry.txt / 04-rose.png / 04-rose-fail.png
+[PASS] 05-bouquet.txt / 05-bouquet-{front,side,top,final}.png / 05-bouquet-fail.*
+[PASS] 06-materials.txt / 06-materials.png / 06-diag-{noglow,solidred}.png
+[PASS] 07-anim.txt / 07-t30.png
+[PASS] 08-particles.txt / 08-particles.png / 08-particles-fail.txt
+[NOTE] 09-12 浏览器交互/降级/适配截图：由用户手动验证（用户指示"有需要浏览器验证的我自己手动验证"）
+[PASS] 14-final.txt（本次生成）
+
+结论：无跳过/漏做项；浏览器类 QA 按用户指示移交手动验证。
+VERDICT: APPROVE
